@@ -57,7 +57,7 @@ const ModalForm = ({handleModalClose, handleSubmit}) => {
                     >
                         Cancel
                     </Button>
-                    <Button variant="contained" color="success" type="submit">
+                    <Button  variant="contained" color="success" type="submit">
                         Submit
                     </Button>
                 </Stack>

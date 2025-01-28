@@ -11,7 +11,7 @@ import {useNavigate, useLocation} from 'react-router-dom';
 const HeaderFunctional = () => {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
-    const hideButton = location.pathname === '/product';
+    const hideButton = location.pathname === 'main/product';
     const handleNavigateTo = () => {
         navigate('/main/product');
     }
