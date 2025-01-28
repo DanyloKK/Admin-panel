@@ -1,0 +1,14 @@
+.header__block{
+    justify-content: space-between;
+    max-width: 1280px;
+}
+.header__block__btn{
+    margin-left: 70px!important;
+    color:#05BC52!important;
+    background-color: white!important;
+}
+.header__block__btnAdd{
+    margin-right: 70px!important;
+    color:#05BC52!important;
+    background-color: white!important;
+}

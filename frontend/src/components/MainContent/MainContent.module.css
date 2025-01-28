@@ -1,0 +1,13 @@
+.main__content_block {
+    max-width: 872px;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+.main__content_title {
+    font-size: 64px;
+    font-weight: bold;
+    line-height: 77px;
+    margin: 0 0 75px 0;
+}

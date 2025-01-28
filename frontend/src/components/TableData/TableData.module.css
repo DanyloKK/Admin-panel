@@ -1,0 +1,8 @@
+.main__table{
+    background-color: #0EC86F;
+}
+.main__table_icon{
+    position:relative;
+    top:6px;
+    opacity: 0.5;
+}
