@@ -2,7 +2,7 @@ import React from 'react';
 import {Form} from 'react-final-form';
 import ModalForm from '../ModalForm/ModalForm.jsx';
 import {validateAll} from "../../validators/validateGoods.js";
-import {addFormValue} from "../../../redux/formSlicer/formSlicer.js";
+import {fetchPosts} from "../../../redux/formSlicer/formSlicer.js";
 import {useDispatch} from "react-redux";
 
 const ModalEditForm = ({handleModalClose}) => {
@@ -10,7 +10,7 @@ const ModalEditForm = ({handleModalClose}) => {
     const handleSubmit = (values) => {
         console.log("Форма сабмитится");
         console.log(values);
-        dispatch(addFormValue(values))
+        dispatch(fetchPosts(values))
         handleModalClose()
     }
     return (
@@ -21,6 +21,7 @@ const ModalEditForm = ({handleModalClose}) => {
                     name: "",
                     quantity: "",
                     price: "",
+                    image: "",
                 }
             }
             onSubmit={handleSubmit}

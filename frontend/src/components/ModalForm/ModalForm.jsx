@@ -14,7 +14,7 @@ const ModalForm = ({handleModalClose, handleSubmit}) => {
                 <h2 className={styles.modal__title}>Add/Edit goods</h2>
                 <CloseIcon onClick={handleModalClose} sx={{color: 'red', fontSize: 40, marginTop: 1, marginRight: 2}}/>
             </div>
-            <form onSubmit={handleSubmit} className={styles.modal__form} method="POST" noValidate>
+            <form onSubmit={handleSubmit} className={styles.modal__form} method="POST" encType="multipart/form-data" noValidate>
                 <Field
                     className={styles.modal__input}
                     component={ModalFormInput}
@@ -38,6 +38,14 @@ const ModalForm = ({handleModalClose, handleSubmit}) => {
                     component={ModalFormInput}
                     label="Price"
                     name="price"
+
+                />
+                <Field
+                    className={styles.modal__input}
+                    component={ModalFormInput}
+                    label="Image"
+                    name="image"
+                    type="file"
 
                 />
                 <Field
