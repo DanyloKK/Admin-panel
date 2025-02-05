@@ -13,15 +13,24 @@ import Grid from '@mui/material/Grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {useDispatch} from "react-redux";
-import {fetchDelete} from "../../../redux/formSlicer/api.js";
-import {useEffect} from "react";
+import {formDelete} from "../../../redux/formSlicer/formSlicer.js";
+import {ModalContext} from "../../context/modalContext.jsx";
+import {useContext} from "react";
 
 const TableData = () => {
     const selectors = useSelector(selector.form)
+    const {handleModalOpen,handleFetch,setFormData,productId,setProductId} = useContext(ModalContext)
     const dispatch = useDispatch();
     const handleDelete = (id) => {
-        dispatch(fetchDelete(id))
+        dispatch(formDelete(id))
     }
+    const handleEditCond = (row,id) => {
+        setFormData(row);
+        setProductId(id);
+        handleFetch()
+        handleModalOpen();
+    };
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{minWidth: 650}} aria-label="simple table">
@@ -53,7 +62,7 @@ const TableData = () => {
                             <TableCell align="left">{row.quantity}</TableCell>
                             <TableCell align="left" className={styles.main__table_component}>
                                 {row.price}
-                                <button className={styles.main__table_btn}>
+                                <button onClick={()=> handleEditCond(row,row.id)} className={styles.main__table_btn}>
                                     <EditIcon
                                         sx={{
                                             position: "absolute",
@@ -69,7 +78,7 @@ const TableData = () => {
                                           top: 12,
                                       }}
                                 >
-                                    <button onClick={() => handleDelete(row.id)} className={styles.main__table_btn}>
+                                    <button type="button" onClick={() => handleDelete(row.id)} className={styles.main__table_btn}>
                                         <DeleteIcon/>
                                     </button>
                                 </Grid>

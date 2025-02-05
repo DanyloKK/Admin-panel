@@ -5,16 +5,14 @@ import {Field} from "react-final-form";
 import ModalTextArea from "../ModalTextArea/ModalTextArea.jsx";
 import styles from "./ModalForm.module.css";
 import CloseIcon from '@mui/icons-material/Close';
-
 const ModalForm = ({handleModalClose, handleSubmit}) => {
-
     return (
         <div>
             <div className={styles.modal__title__block}>
                 <h2 className={styles.modal__title}>Add/Edit goods</h2>
                 <CloseIcon onClick={handleModalClose} sx={{color: 'red', fontSize: 40, marginTop: 1, marginRight: 2}}/>
             </div>
-            <form onSubmit={handleSubmit} className={styles.modal__form} method="POST" encType="multipart/form-data" noValidate>
+            <form onSubmit={handleSubmit} className={styles.modal__form}  encType="multipart/form-data" noValidate>
                 <Field
                     className={styles.modal__input}
                     component={ModalFormInput}

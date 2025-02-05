@@ -73,7 +73,7 @@ app.get('/form-data', async (req, res) => {
     }
 });
 app.delete("/form-data/:id",async(req,res)=>{
-    const {id} = req.params
+    const {id} = req.params;
     try{
         const formDelete = await FormData.deleteOne({id: id})
         res.status(200).json(formDelete);
@@ -82,6 +82,21 @@ app.delete("/form-data/:id",async(req,res)=>{
         return res.status(500).send("Error occured");
     }
 })
+app.put("/form-data/:id", async (req, res) => {
+    const { id } = req.params;
+    console.log(req.body);
+    console.log(id);
+    try {
+        const updatedForm = await FormData.findOneAndUpdate({id}, req.body, { new: true });
+        if (!updatedForm) {
+            return res.status(404).json({ message: "Form not found" });
+        }
+        res.status(200).json(updatedForm);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error occured" });
+    }
+});
 
 app.listen(8080, () => {
     console.log("Server started on port 8080");

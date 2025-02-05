@@ -1,3 +1,3 @@
 export default {
-    form:state => state.formInfo.formData
+    form: state => state.formInfo.formData,
 }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Stack} from '@mui/material';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -7,16 +7,21 @@ import AddIcon from '@mui/icons-material/Add';
 import styles from './HeaderFunctional.module.css';
 import ModalEditForm from "../ModalEditForm/ModalEditForm.jsx"
 import {useNavigate, useLocation} from 'react-router-dom';
+import {ModalContext} from '../../context/modalContext.jsx';
+import {useSelector} from 'react-redux';
+import selector from "../../../redux/formSlicer/selector.js";
 
 const HeaderFunctional = () => {
-    const [open, setOpen] = useState(false);
+    const {open,handleModalClose,handleModalOpen,editData,handleFetch,handlePost} = useContext(ModalContext);
     const navigate = useNavigate();
     const hideButton = location.pathname === 'main/product';
     const handleNavigateTo = () => {
         navigate('/main/product');
     }
-    const handleModalOpen = () => setOpen(true);
-    const handleModalClose = () => setOpen(false);
+    const handlePostCond = () =>{
+        handlePost()
+        handleModalOpen();
+    }
     return (
         <Stack direction="row" spacing={2} className={styles.header__block}> {!hideButton && (
             <>
@@ -29,7 +34,7 @@ const HeaderFunctional = () => {
                     Preview
                 </Button>
                 <Button
-                    onClick={handleModalOpen}
+                    onClick={handlePostCond}
                     className={styles.header__block__btnAdd}
                     variant="contained"
                     startIcon={<AddIcon/>}
@@ -55,7 +60,7 @@ const HeaderFunctional = () => {
                         padding: 0,
                     }}
                 >
-                    <ModalEditForm handleModalClose={handleModalClose}/>
+                    <ModalEditForm  handleModalClose={handleModalClose}/>
                 </Box>
             </Modal>
         </Stack>

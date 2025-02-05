@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {fetchApi, fetchAdd, fetchDelete} from "./api.js";
+import {fetchApi, fetchAdd, fetchDelete,fetchUpdate} from "./api.js";
 
 const initialState = {
     formData:[],
@@ -30,8 +30,8 @@ export const fetchPosts = createAsyncThunk(
             fulfillWithValue: thunkAPI.fulfillWithValue,
         });
         try {
+            console.log(values);
             const response = await fetchAdd(values);
-            fetchData()
             console.log(response);
             return response;
         } catch (error) {
@@ -46,9 +46,25 @@ export const formDelete = createAsyncThunk(
         try{
             const response = await fetchDelete(id);
             console.log(response)
+            thunkAPI.dispatch(fetchData())
             return response
         }catch (error){
             console.log("Error in deletion",error)
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+)
+export const formUpdate = createAsyncThunk(
+    "form/formUpdate",
+    async({ id, values },thunkAPI) =>{
+        try{
+            console.log(id,values);
+            const response = await fetchUpdate(id,values);
+            console.log(response)
+            thunkAPI.dispatch(fetchData())
+            return response
+        }catch (error){
+            console.log("Error in editing",error)
             return thunkAPI.rejectWithValue(error.message);
         }
     }
@@ -94,12 +110,32 @@ export const formSlicer = createSlice({
                 state.status = "loading...";
             })
             .addCase(formDelete.fulfilled,(state,action)=>{
-                console.log("Пришедшие данные в Redux:", action.payload);
                 state.isLoading = false;
                 state.formData = state.formData.filter(item => item.id !== action.payload.id);
                 state.status = "succeeded";
+                console.log("Пришедшие данные в Redux:", action.payload);
             })
             .addCase(formDelete.rejected,(state,action)=>{
+                state.isLoading = false;
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(formUpdate.pending,(state)=>{
+                state.isLoading = true;
+                state.status = "loading...";
+            })
+            .addCase(formUpdate.fulfilled,(state,action)=>{
+                state.isLoading = false;
+                state.formData = state.formData.map((item) => {
+                    if (item.id === action.payload.id) {
+                        return {...action.payload };
+                    }
+                    return item;
+                });
+                state.status = "succeeded";
+                console.log("Пришедшие данные в Redux:", action.payload);
+            })
+            .addCase(formUpdate.rejected,(state,action)=>{
                 state.isLoading = false;
                 state.status = "failed";
                 state.error = action.payload;
