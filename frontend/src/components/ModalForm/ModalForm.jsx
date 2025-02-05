@@ -45,7 +45,7 @@ const ModalForm = ({handleModalClose, handleSubmit}) => {
                     component={ModalFormInput}
                     label="Image"
                     name="image"
-                    type="file"
+                    type="text"
 
                 />
                 <Field

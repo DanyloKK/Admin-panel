@@ -6,3 +6,10 @@
     top:6px;
     opacity: 0.5;
 }
+.main__table_component{
+    position: relative!important;
+}
+.main__table_btn{
+    background: white;
+    border: none;
+}

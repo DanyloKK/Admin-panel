@@ -10,6 +10,7 @@ const ModalEditForm = ({handleModalClose}) => {
     const handleSubmit = (values) => {
         console.log("Форма сабмитится");
         console.log(values);
+
         dispatch(fetchPosts(values))
         handleModalClose()
     }

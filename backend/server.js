@@ -2,10 +2,11 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
-const multer = require('multer');
 const password = "Kuzka2015";
+const mongooseSequence = require('mongoose-sequence')(mongoose);
+
 const uri = `mongodb+srv://domik12560:${password}@cluster0.sju2l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
-mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log('Connected to MongoDB');
     })
@@ -15,7 +16,6 @@ mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
 
 app.use(express.json());
 app.use(cors());
-const upload = multer({ dest: 'uploads/' })
 
 const formSchema = new mongoose.Schema({
     name: {
@@ -37,31 +37,23 @@ const formSchema = new mongoose.Schema({
     image: {
         type: String,
         required: true,
-    },
-});
-
-const formData = mongoose.model("FormData", formSchema);
-
-
-app.get('/form-data', async (req, res) => {
-    try {
-        const form = await formData.find();
-        console.log(form);
-        return res.status(200).json(form);
-    } catch (err) {
-        console.log(err);
-        return res.status(500).send("Error occured");
     }
 });
 
-app.post('/form-data', upload.single('image'), async (req, res) => {
+
+formSchema.plugin(mongooseSequence, { inc_field: 'id' });
+
+const FormData = mongoose.model("FormData", formSchema);
+
+app.post('/form-data', async (req, res) => {
     try {
-        const formValues = req.body;
-        console.log(formValues);
-        const formInfo = new formData({
-            ...formValues,
-            image: `${upload/req.file.filename}`,
+        const formData = req.body;
+        console.log('Received values:', req.body);
+
+        const formInfo = new FormData({
+            ...formData,
         });
+
         await formInfo.save();
         res.status(201).json(formInfo);
     } catch (err) {
@@ -69,6 +61,27 @@ app.post('/form-data', upload.single('image'), async (req, res) => {
         res.status(500).send('Произошла ошибка при сохранении данных');
     }
 });
+
+app.get('/form-data', async (req, res) => {
+    try {
+        const form = await FormData.find();
+        console.log(form);
+        return res.status(200).json(form);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send("Error occured");
+    }
+});
+app.delete("/form-data/:id",async(req,res)=>{
+    const {id} = req.params
+    try{
+        const formDelete = await FormData.deleteOne({id: id})
+        res.status(200).json(formDelete);
+    }catch (err) {
+        console.log(err);
+        return res.status(500).send("Error occured");
+    }
+})
 
 app.listen(8080, () => {
     console.log("Server started on port 8080");
