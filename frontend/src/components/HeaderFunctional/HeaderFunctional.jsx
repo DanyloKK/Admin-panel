@@ -8,31 +8,51 @@ import styles from './HeaderFunctional.module.css';
 import ModalEditForm from "../ModalEditForm/ModalEditForm.jsx"
 import {useNavigate, useLocation} from 'react-router-dom';
 import {ModalContext} from '../../context/modalContext.jsx';
-import {useSelector} from 'react-redux';
-import selector from "../../../redux/formSlicer/selector.js";
+import {HomeIcon} from "../HomeIcon/HomeIcon.jsx"
 
 const HeaderFunctional = () => {
-    const {open,handleModalClose,handleModalOpen,editData,handleFetch,handlePost} = useContext(ModalContext);
+    const {open, handleModalClose, handleModalOpen, editData, handleFetch, handlePost} = useContext(ModalContext);
     const navigate = useNavigate();
-    const hideButton = location.pathname === 'main/product';
+    const targetPath = "/main/product"
+    const location = useLocation()
     const handleNavigateTo = () => {
         navigate('/main/product');
     }
-    const handlePostCond = () =>{
+    const handlePostCond = () => {
         handlePost()
         handleModalOpen();
     }
+    const handleNavigateBack = () => {
+        navigate("/main/content")
+    }
     return (
-        <Stack direction="row" spacing={2} className={styles.header__block}> {!hideButton && (
+        <Stack direction="row" spacing={2} className={styles.header__block}>
             <>
-                <Button
-                    className={styles.header__block__btn}
-                    variant="contained"
-                    startIcon={<PreviewIcon/>}
-                    onClick={handleNavigateTo}
-                >
-                    Preview
-                </Button>
+                {location.pathname !== targetPath ? (
+                        <Button
+                            className={styles.header__block__btn}
+                            variant="contained"
+                            startIcon={<PreviewIcon/>}
+                            onClick={handleNavigateTo}
+                        >
+                            Preview
+                        </Button>
+                    )
+                    : (
+                        <Button className={styles.header__block__btn}
+                                variant="contained"
+                                onClick={handleNavigateBack}
+                        >
+                            <Stack direction="row" spacing={3}
+                                   sx={{
+                                       marginRight:1,
+                                   }}
+                            >
+                                <HomeIcon color="success" />
+                            </Stack>
+                            Main
+                        </Button>
+                    )}
                 <Button
                     onClick={handlePostCond}
                     className={styles.header__block__btnAdd}
@@ -42,7 +62,6 @@ const HeaderFunctional = () => {
                     Add product
                 </Button>
             </>
-        )}
             <Modal open={open}
                    onClose={handleModalClose}
             >
@@ -60,7 +79,7 @@ const HeaderFunctional = () => {
                         padding: 0,
                     }}
                 >
-                    <ModalEditForm  handleModalClose={handleModalClose}/>
+                    <ModalEditForm handleModalClose={handleModalClose}/>
                 </Box>
             </Modal>
         </Stack>

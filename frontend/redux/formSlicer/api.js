@@ -5,7 +5,6 @@ export const fetchApi = async () => {
             throw new Error("Error fetching form data")
         }
         const data = await response.json()
-        console.log('Полученные данные:', data);
         return data
     } catch (error) {
         console.error("Ошибка:", error.message);
@@ -27,7 +26,6 @@ export const fetchAdd = async (values) => {
             throw new Error("Error posting form data")
         }
         const data = await response.json()
-        console.log('Send data:', data);
         return data
     } catch (error) {
         console.error("Error:", error.message);
@@ -42,7 +40,6 @@ export const fetchDelete = async (id) => {
             throw new Error("Error deleting form data")
         }
         const data = await response.json();
-        console.log(data)
         return data;
     } catch (error) {
         console.error("Error:", error.message)
@@ -61,7 +58,6 @@ export const fetchUpdate = async (id,values) => {
             })
         })
         const data = await response.json()
-        console.log('Send data:', data);
         return data
     } catch (error) {
         console.error("Error:", error.message)

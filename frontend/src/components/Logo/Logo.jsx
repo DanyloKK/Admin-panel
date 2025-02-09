@@ -1,8 +1,27 @@
 import LogoMain from "../../assets/img/main-logo.svg"
 import styles from "./Logo.module.css";
-const LogoType = () => (
-    <div className={styles.header__logo__block}>
-        <img src={LogoMain} alt="Rozetka-logo"/>
-    </div>
-)
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import { deepOrange } from '@mui/material/colors';
+
+
+const LogoType = () => {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const shortUserName = currentUser.replace(currentUser,currentUser[0])
+    return (
+        <div className={styles.header__logo__block}>
+            <img src={LogoMain} alt="Rozetka-logo"/>
+            <Stack direction="row" spacing={2}>
+                <Avatar
+                    sx={{bgcolor: deepOrange[500]}}
+                    alt="Remy Sharp"
+                    src="/broken-image.jpg"
+                >
+                    {shortUserName}
+                </Avatar>
+                <p className={styles.header__user}>Welcome <p className={styles.header__user_inner}>{currentUser}</p></p>
+            </Stack>
+        </div>
+    )
+}
 export default LogoType

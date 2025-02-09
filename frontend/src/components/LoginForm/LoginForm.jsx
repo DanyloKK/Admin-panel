@@ -4,22 +4,19 @@ import UserForm from "../UserForm/UserForm.jsx";
 import {validate} from "../../validators/validity.js";
 import {useNavigate} from 'react-router-dom';
 import {useDispatch} from "react-redux";
-import {createUser} from "../../../redux/formSlicer/authReducer.js";
+import {logUser} from "../../../redux/formSlicer/authReducer.js";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const handleSubmit = (values) => {
-        dispatch(createUser(values))
-            .unwrap()
-            .then(() => {
-                // Перенаправление на другую страницу после успешной регистрации
-                navigate('/main/content');
-            })
-            .catch((error) => {
-                console.log('Ошибка при отправке данных:', error);
-            });
-    }
+    const handleSubmit = async (values) => {
+        try {
+            await dispatch(logUser(values)).unwrap();
+            navigate("main/content")
+        } catch (error) {
+            console.log('Ошибка при отправке данных:', error);
+        }
+    };
     return (
         <Form
             initialValues={{username: "", password: ""}}
