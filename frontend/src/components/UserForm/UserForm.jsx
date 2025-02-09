@@ -18,7 +18,7 @@ const UserForm = (props) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className={styles.data__form}>
+        <form onSubmit={handleSubmit} className={styles.data__form} method="POST">
             <div>
                 <img className={styles.data__form__img} src={logo} alt="logo" />
             </div>
