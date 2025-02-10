@@ -78,12 +78,16 @@ const TableData = () => {
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={style}>
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                        <Typography id="modal-modal-title" variant="h6" component="h2" sx={{
+                            color:"green",
+                            marginBottom:3,
+                        }}>
                             Are u sure you want to delete this product?
                         </Typography>
                         <Stack direction="row" spacing={2}>
                             <Button onClick={removeConfirm} color="secondary" sx={{
                                 backgroundColor: "grey",
+                                color:"white",
                             }}>Cancel</Button>
                             <Button onClick={handleConfirm} variant="contained" color="error">
                                 Delete

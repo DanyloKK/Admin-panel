@@ -12,7 +12,7 @@ const InputLoginForm = ({ label, input, meta, name, ...rest }) => {
             className={styles.data__form__field}
             name={name}
             error={meta.touched && meta.error}
-            helperText={meta.touched && meta.error ? meta.error : <span className={styles.data__form_login}>{selector}</span> || ''}
+            helperText={meta.touched && meta.error ? meta.error : <span className={styles.data__form_login}>{selector === "succeeded" || "loading"? "" : selector}</span> || ''}
             {...rest}
         />
     );

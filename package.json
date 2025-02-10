@@ -17,6 +17,7 @@
     "concurrently": "^9.1.2"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
     "vite": "^6.0.11"
   }
 }
