@@ -5,6 +5,16 @@
     gap:165px;
     flex-wrap: wrap;
     padding: 0 0 40px 0;
+
+}
+.products__containerNoAdded{
+    margin: 0 auto;
+    max-width: 1149px;
+    display: flex;
+    gap:165px;
+    flex-wrap: wrap;
+    padding: 0 0 40px 0;
+    justify-content: center;
 }
 .products__imgBlock{
     max-width: 219px;
@@ -54,4 +64,7 @@
     text-align: center;
     color: #000;
     line-height: 242%;
+}
+.products__noArticle{
+    font-size: 46px;
 }
